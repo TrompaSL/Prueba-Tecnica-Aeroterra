@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Prueba Técnica - Aeroterra</title>
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.12/esri/themes/light/main.css" />
+    <script>
+        window.dojoConfig = {
+            packages: [{
+                name: "vue",
+                location: "https://unpkg.com/vue/dist/",
+                main: "vue"
+            }]
+        };
+    </script>
+    <script src="https://js.arcgis.com/4.12/"></script>
+    <script>
+        require(["esri/Map", "esri/views/MapView", "vue", "esri/widgets/Search"], function(Map, MapView, Vue) {
+            var map = new Map({
+                basemap: "topo"
+            });
+            var view = new MapView({
+                container: "viewDiv",
+                map: map,
+                zoom: 14,
+                center: [-58.3772300, -34.6131500]
+            });
+
+            var searchWidget = new Search({
+                view: view
+            });
+
+
+
+        });
+    </script>
+</head>
+
+<body>
+    <div id="viewDiv"></div>
+</body>
+
+</html>
