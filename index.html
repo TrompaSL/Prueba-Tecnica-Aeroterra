@@ -11,8 +11,10 @@
     <script>
         require([
             "esri/Map",
-            "esri/views/MapView"
-        ], function(Map, MapView) {
+            "esri/views/MapView",
+            "esri/widgets/Search",
+            "esri/tasks/Locator"
+        ], function(Map, MapView, Search, Locator) {
 
             var map = new Map({
                 basemap: "topo-vector"
@@ -21,9 +23,18 @@
             var view = new MapView({
                 container: "viewDiv",
                 map: map,
-                center: [-118.71511, 34.09042], // longitude, latitude
-                zoom: 11
+                center: [-58.3772300, -34.6131500], // longitude, latitude
+                zoom: 14
             });
+
+            var searchWidget = new Search({
+                sources: [""],
+                view: view
+            });
+
+            var Locator = new Locator({
+
+            })
         });
     </script>
 </head>
@@ -34,16 +45,16 @@
 
 
         <div class="form-popup" id="myForm">
-            <form action="/action_page.php" class="form-container">
+            <form class="form-container">
 
                 <label for="nombre"><b>Nombre</b></label>
-                <input type="text" placeholder="ej: Av. E. Madero 1020" name="nombre" required>
+                <input type="text" placeholder="ej: Av. E. Madero 1020" name="nombre">
 
                 <label for="dir"><b>Dirección</b></label>
-                <input type="text" placeholder="ej: Av. E. Madero 1020" name="dir" required>
+                <input type="text" placeholder="ej: Av. E. Madero 1020" name="dir" id="uniqueID" required>
 
                 <label for="dir"><b>Telefono</b></label>
-                <input type="text" placeholder="ej: 54 9 11 5272 0900" name="tel" required>
+                <input type="text" placeholder="ej: 54 9 11 5272 0900" name="tel">
 
                 <label for="dir"><b>Categoria</b></label>
 
@@ -55,17 +66,24 @@
 
                 <br>
                 <label for="coord"><b>Coordenadas</b></label>
-                <input type="text" placeholder="ej: Av. E. Madero 1020" name="coord" required>
+                <input type="text" placeholder="ej: Av. E. Madero 1020" name="coord">
 
 
 
-                <button type="submit" class="btn">Agregar</button>
+                <button type="submit" class="btn" onclick="buscar(document.getElementById('uniqueID').value)">Agregar</button>
                 <button type="button" class="btn cancel" onclick="closeForm()">Cancelar</button>
             </form>
         </div>
     </div>
 </body>
 <script>
+    function buscar(busq) {
+
+        search(busq);
+
+    }
+
+
     function openForm() {
         document.getElementById("myForm").style.display = "block";
     }
