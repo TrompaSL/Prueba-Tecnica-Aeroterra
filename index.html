@@ -1,55 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <title>Prueba Técnica - Aeroterra</title>
-    <style>
-        html,
-        body,
-        #viewDiv {
-            padding: 0;
-            margin: 0;
-            height: 100%;
-            width: 100%;
-        }
-    </style>
-    <link rel="stylesheet" href="https://js.arcgis.com/4.12/esri/themes/light/main.css" />
-    <script>
-        window.dojoConfig = {
-            packages: [{
-                name: "vue",
-                location: "https://unpkg.com/vue/dist/",
-                main: "vue"
-            }]
-        };
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aeroterra</title>
+    <link rel="stylesheet" type="text/css" href="style.css" href="https://js.arcgis.com/4.12/esri/themes/light/main.css">
     <script src="https://js.arcgis.com/4.12/"></script>
     <script>
-        require(["esri/Map", "esri/views/MapView", "vue", "esri/widgets/Search"], function(Map, MapView, Vue) {
+        require([
+            "esri/Map",
+            "esri/views/MapView"
+        ], function(Map, MapView) {
+
             var map = new Map({
-                basemap: "topo"
+                basemap: "topo-vector"
             });
+
             var view = new MapView({
                 container: "viewDiv",
                 map: map,
-                zoom: 14,
-                center: [-58.3772300, -34.6131500]
+                center: [-118.71511, 34.09042], // longitude, latitude
+                zoom: 11
             });
-
-            var searchWidget = new Search({
-                view: view
-            });
-
-
-
         });
     </script>
 </head>
 
 <body>
-    <div id="viewDiv"></div>
+    <div id="viewDiv">
+        <button class="open-button" onclick="openForm()">Open Form</button>
+
+
+        <div class="form-popup" id="myForm">
+            <form action="/action_page.php" class="form-container">
+
+                <label for="nombre"><b>Nombre</b></label>
+                <input type="text" placeholder="ej: Av. E. Madero 1020" name="nombre" required>
+
+                <label for="dir"><b>Dirección</b></label>
+                <input type="text" placeholder="ej: Av. E. Madero 1020" name="dir" required>
+
+                <label for="dir"><b>Telefono</b></label>
+                <input type="text" placeholder="ej: 54 9 11 5272 0900" name="tel" required>
+
+                <label for="dir"><b>Categoria</b></label>
+
+                <select name="Categoria" class="select-css">
+                <option value="value1">Residencial</option> 
+                <option value="value2" selected>Comercial</option>
+                <option value="value3">Mixta</option>
+              </select>
+
+                <br>
+                <label for="coord"><b>Coordenadas</b></label>
+                <input type="text" placeholder="ej: Av. E. Madero 1020" name="coord" required>
+
+
+
+                <button type="submit" class="btn">Agregar</button>
+                <button type="button" class="btn cancel" onclick="closeForm()">Cancelar</button>
+            </form>
+        </div>
+    </div>
 </body>
+<script>
+    function openForm() {
+        document.getElementById("myForm").style.display = "block";
+    }
+
+    function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+    }
+</script>
 
 </html>
